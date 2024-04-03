@@ -1,3 +1,7 @@
+# fastapiadmin 是一个基于 fastapi 的后台管理系统 demo,部分内容来自官方文档以及chatgpt
+
+#请不要用于生产环境！！
+
 # 进入后端目录
     cd fastapi_admin
 

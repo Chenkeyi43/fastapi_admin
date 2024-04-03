@@ -1,16 +1,27 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+from fastapi import FastAPI
+from admin.controller.login import login_router
+from admin.controller.role import role_router
+from admin.controller.user import user_router
+import uvicorn
 
 
-# Press the green button in the gutter to run the script.
+app = FastAPI()
+
+router_list = [
+    {'router': login_router, 'tags': ['登录路由']},
+    {'router': user_router, 'tags': ['用户路由']},
+    {'router': role_router, 'tags': ['角色路由']},
+
+]
+
+for router in router_list:
+    # 使用 app.include_router()，我们可以将每个 APIRouter 添加到主 FastAPI 应用程序中
+    app.include_router(router=router.get('router'),tags=router.get('tags'))
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    uvicorn.run(
+        app='app:app',
+        host='127.0.0.1',
+        port=8080,
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    )
